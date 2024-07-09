@@ -3,7 +3,7 @@ from math import sqrt
 import helpers
 import export
 
-def make_line(from_point, to_point, thickness=1):
+def make_line(from_point, to_point, thickness=1, color=(255, 0, 0)):
     slope = (to_point[1] - from_point[1])/(to_point[0] - from_point[0])
     points = []
     curr_point = from_point
@@ -24,7 +24,9 @@ def make_line(from_point, to_point, thickness=1):
         
         next_point = (curr_point[0] + 1, curr_point[1] + slope)
         curr_point = next_point
-    print(points)
+        
+    for point in points:
+        pixels[point[1]][point[0]] = color
     return points
 
 def approx_equals(point1, point2, tolerance=1):
@@ -34,9 +36,7 @@ def approx_equals(point1, point2, tolerance=1):
 
 pixels = helpers.init_pixel_grid(512, 512, (255, 255, 255))
 
-line = make_line((10, 10), (100, 100), 4)
+line = make_line((10, 10), (99, 2), 4)
 
-for point in line:
-    pixels[point[1]][point[0]] = (255, 0, 0)
 
 export.pixel_arr_to_img("test_data/line.png", pixels)
